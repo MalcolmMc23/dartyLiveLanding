@@ -1,0 +1,95 @@
+"use client";
+
+import StyledEmailInput from "@/components/StyledEmailInput";
+import UniversityLogoScroll from "@/components/UniversityLogoScroll";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+export default function Waitlist() {
+  const [email, setEmail] = useState("");
+  const [showWarning, setShowWarning] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
+
+  const handleTryVideoChat = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (!email || !email.endsWith(".edu")) {
+      setShowWarning(true);
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+
+      // Submit email to database
+      const response = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!response.ok) {
+        console.error("Failed to submit email");
+        setShowWarning(true);
+        return;
+      }
+
+      // Redirect to countdown page
+      router.push(`/countdown?email=${encodeURIComponent(email)}`);
+    } catch (err) {
+      console.error(err);
+      setShowWarning(true);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="flex flex-col items-center gap-6 md:gap-8 text-center w-full max-w-4xl mt-8">
+      {/* Logo */}
+      <h1 className="text-4xl md:text-5xl font-bold mt-8">
+        DormParty<span className="text-[#A259FF]">.live</span>
+      </h1>
+
+      {/* Subtitle */}
+      <p className="text-lg text-gray-400">Sign in with .edu</p>
+
+      {/* University Logos Infinite Scroll */}
+      <div className="w-full">
+        <UniversityLogoScroll />
+      </div>
+
+      {/* Email Input */}
+      <div className="w-full max-w-md mt-2">
+        <StyledEmailInput onEmailChange={setEmail} />
+      </div>
+
+      {/* Video Chat Link */}
+      <div className="mt-6">
+        <button
+          onClick={handleTryVideoChat}
+          className={`px-6 py-3 bg-[#A259FF] text-black font-semibold rounded-md hover:bg-opacity-90 transition-all ${
+            isSubmitting ? "opacity-70" : ""
+          }`}
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? (
+            <span className="flex items-center">
+              <div className="w-4 h-4 mr-2 border-2 border-t-2 border-black border-t-transparent rounded-full animate-spin" />
+              Submitting...
+            </span>
+          ) : (
+            "Join Waitlist"
+          )}
+        </button>
+        {showWarning && (
+          <p className="mt-2 text-sm text-red-400">
+            Please enter a valid .edu email to continue
+          </p>
+        )}
+      </div>
+    </div>
+  );
+} 
