@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useLeftBehindStatus } from "./hooks/useLeftBehindStatus";
+import { useEffect } from "react";
 
 interface LeftBehindNotificationProps {
   username: string;
@@ -23,9 +24,14 @@ export function LeftBehindNotification({
 
   const router = useRouter();
 
-  // If matched and have a match room, join it
+  // Only trigger join on match once, not on every render
+  useEffect(() => {
+    if (isMatched && matchRoom) {
+      onJoinNewRoom(matchRoom);
+    }
+  }, [isMatched, matchRoom, onJoinNewRoom]);
+
   if (isMatched && matchRoom) {
-    onJoinNewRoom(matchRoom);
     return null;
   }
 
