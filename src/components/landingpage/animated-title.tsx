@@ -46,36 +46,35 @@ export default function AnimatedTitle() {
 
     const parts = displayedText.split(" ")
     return parts.map((part, index) => {
-      if (
-        part === "DormParty:" ||
-        part === "Omegle" ||
-        part === "Students"
-      ) {
-        // Remove colon from DormParty for gradient, keep colon white
-        if (part === "DormParty:") {
-          return (
-            <span
-              key={index}
-              className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-purple-600 font-bold"
-            >
-              {" DormParty"}
-              <span className="text-white">:</span>
-            </span>
-          )
-        }
+      // Handle "DormParty:"
+      if (part === "DormParty:") {
         return (
           <span
             key={index}
             className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-purple-600 font-bold"
           >
-            {index === 0 ? "" : " "}
+            {" DormParty"}
+            <span className="text-white">:</span>
+            <br />
+          </span>
+        )
+      }
+      // Gradient for "Omegle" and "Students"
+      if (part === "Omegle" || part === "Students") {
+        return (
+          <span
+            key={index}
+            className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-purple-600 font-bold"
+          >
+            {index !== 0 ? " " : ""}
             {part}
           </span>
         )
       }
+      // Add space except for the first word
       return (
         <span key={index}>
-          {index === 0 ? "" : " "}
+          {index !== 0 ? " " : ""}
           {part}
         </span>
       )
