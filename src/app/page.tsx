@@ -5,7 +5,7 @@ import LandingPage from "@/components/landingpage/LandingPage";
 import { useState } from "react";
 
 export default function Home() {
-  const [showWaitlist, setShowWaitlist] = useState(false);
+  const [showWaitlist, setShowWaitlist] = useState(true);
 
   if (showWaitlist) {
     return (
