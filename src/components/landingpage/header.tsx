@@ -20,7 +20,7 @@ export default function Header() {
     <header className="relative z-20 container mx-auto px-4 py-6">
       <div className="flex justify-between items-center">
         <div className="flex items-center">
-          <h1 className="text-2xl md:text-3xl font-bold">
+          <h1 className="text-2xl md:text-3xl font-bold hover:cursor-pointer">
             DormParty<span className="text-purple-500">.live</span>
           </h1>
         </div>
@@ -35,22 +35,22 @@ export default function Header() {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-4">
           <Link href="#features">
-            <Button variant="ghost" className="text-white hover:bg-purple-900/50 hover:text-purple-300">
+            <Button variant="ghost" className="text-white hover:cursor-pointer hover:bg-purple-900/50 hover:text-purple-300">
               Features
             </Button>
           </Link>
           <Link href="#how-it-works">
-            <Button variant="ghost" className="text-white hover:bg-purple-900/50 hover:text-purple-300">
+            <Button variant="ghost" className="text-white hover:cursor-pointer hover:bg-purple-900/50 hover:text-purple-300">
               How It Works
             </Button>
           </Link>
           <Link href="#video-demo">
-            <Button variant="ghost" className="text-white hover:bg-purple-900/50 hover:text-purple-300">
+            <Button variant="ghost" className="text-white hover:cursor-pointer hover:bg-purple-900/50 hover:text-purple-300">
               Demo
             </Button>
           </Link>
           <Link href="#get-started">
-            <Button className="bg-purple-600 hover:bg-purple-700 text-white">Get Started</Button>
+            <Button className="bg-purple-600 hover:cursor-pointer hover:bg-purple-700 text-white">Get Started</Button>
           </Link>
         </nav>
       </div>
